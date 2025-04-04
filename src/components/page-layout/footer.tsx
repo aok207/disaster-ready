@@ -1,106 +1,14 @@
-import type React from "react";
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
+"use client";
+import { items } from "@/constants/page-links";
+import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { AlertTriangle, Menu } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { ThemeProvider } from "@/components/theme-provider";
+import { usePathname } from "next/navigation";
+import { Button } from "../ui/button";
 
-const inter = Inter({ subsets: ["latin"] });
+export default function Footer() {
+  const pathname = usePathname();
+  const isActive = (href: string) => pathname === href;
 
-export const metadata: Metadata = {
-  title: "Disaster Information & Support Platform",
-  description:
-    "Stay informed and prepared for disasters with resources, news, and support",
-};
-
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={inter.className} suppressHydrationWarning>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="light"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <Header />
-          {children}
-          <Footer />
-        </ThemeProvider>
-      </body>
-    </html>
-  );
-}
-
-function Header() {
-  return (
-    <header className="border-b">
-      <div className="container mx-auto px-4">
-        <div className="flex h-16 items-center justify-between">
-          <div className="flex items-center gap-6">
-            <Link
-              href="/"
-              className="flex items-center gap-2 font-bold text-xl"
-            >
-              <AlertTriangle className="h-6 w-6 text-red-600" />
-              <span>DisasterReady</span>
-            </Link>
-            <nav className="hidden md:flex items-center gap-6">
-              <Link
-                href="/news"
-                className="text-sm font-medium hover:text-red-600 transition-colors"
-              >
-                News & Updates
-              </Link>
-              <Link
-                href="/disasters"
-                className="text-sm font-medium hover:text-red-600 transition-colors"
-              >
-                Disaster Info
-              </Link>
-              <Link
-                href="/community"
-                className="text-sm font-medium hover:text-red-600 transition-colors"
-              >
-                Community
-              </Link>
-              <Link
-                href="/therapists"
-                className="text-sm font-medium hover:text-red-600 transition-colors"
-              >
-                Find Support
-              </Link>
-            </nav>
-          </div>
-          <div className="flex items-center gap-4">
-            <Button
-              variant="outline"
-              size="sm"
-              className="hidden md:inline-flex"
-            >
-              Emergency Contacts
-            </Button>
-            <Button size="sm" className="hidden md:inline-flex">
-              Sign In
-            </Button>
-            <Button variant="ghost" size="icon" className="md:hidden">
-              <Menu className="h-5 w-5" />
-              <span className="sr-only">Toggle menu</span>
-            </Button>
-          </div>
-        </div>
-      </div>
-    </header>
-  );
-}
-
-function Footer() {
   return (
     <footer className="bg-slate-900 text-slate-200">
       <div className="container mx-auto px-4 py-12">
@@ -116,38 +24,19 @@ function Footer() {
           <div>
             <h3 className="mb-4 text-lg font-semibold">Quick Links</h3>
             <ul className="space-y-2 text-sm">
-              <li>
-                <Link
-                  href="/news"
-                  className="text-slate-400 hover:text-white transition-colors"
-                >
-                  News & Updates
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/disasters"
-                  className="text-slate-400 hover:text-white transition-colors"
-                >
-                  Disaster Information
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/community"
-                  className="text-slate-400 hover:text-white transition-colors"
-                >
-                  Community Stories
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/therapists"
-                  className="text-slate-400 hover:text-white transition-colors"
-                >
-                  Find a Therapist
-                </Link>
-              </li>
+              {items.map((item) => (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    className={cn(
+                      "text-slate-400 hover:text-white transition-colors",
+                      isActive(item.href) && "text-white",
+                    )}
+                  >
+                    {item.title}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
           <div>
