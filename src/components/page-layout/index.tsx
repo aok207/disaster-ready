@@ -7,9 +7,11 @@ import { ProgressProvider } from "@bprogress/next/app";
 export default function PageLayout({ children }: { children: ReactNode }) {
   return (
     <ProgressProvider color="#ff0000" options={{ showSpinner: true }}>
-      <Header />
-      {children}
-      <Footer />
+      <div className="min-h-svh flex flex-col">
+        <Header />
+        {children}
+        <Footer />
+      </div>
     </ProgressProvider>
   );
 }
