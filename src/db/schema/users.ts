@@ -1,3 +1,4 @@
+import { relations } from "drizzle-orm";
 import {
   boolean,
   timestamp,
@@ -5,8 +6,13 @@ import {
   text,
   primaryKey,
   integer,
+  pgEnum,
 } from "drizzle-orm/pg-core";
 import type { AdapterAccountType } from "next-auth/adapters";
+import { stories, storyComments } from "./stories";
+import { consultations, therapistReviews } from "./therapists";
+
+export const rolesEnum = pgEnum("role", ["admin", "user"]);
 
 export const users = pgTable("user", {
   id: text("id")
@@ -14,7 +20,7 @@ export const users = pgTable("user", {
     .$defaultFn(() => crypto.randomUUID()),
   name: text("name"),
   email: text("email").unique(),
-  phone: text("phone").unique(),
+  role: rolesEnum().default("user"),
   emailVerified: timestamp("emailVerified", { mode: "date" }),
   image: text("image"),
 });
@@ -91,3 +97,12 @@ export const authenticators = pgTable(
     },
   ],
 );
+
+// Relations
+//
+export const usersRelations = relations(users, ({ many }) => ({
+  stories: many(stories),
+  comments: many(storyComments),
+  therapistReviews: many(therapistReviews),
+  consultations: many(consultations),
+}));
