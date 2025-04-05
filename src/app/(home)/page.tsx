@@ -18,13 +18,9 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { OfflineBanner } from "@/components/offline-banner";
 
 export default async function Home() {
-  const session = await auth();
-
   return (
     <main className="min-h-screen">
       <OfflineBanner />
-
-      {JSON.stringify(session, null, 2)}
 
       {/* Hero Section */}
       <section className="relative bg-slate-900 text-white">
