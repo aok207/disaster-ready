@@ -1,19 +1,30 @@
-import Link from "next/link"
-import Image from "next/image"
-import { Search, ArrowRight, Filter } from "lucide-react"
+import Link from "next/link";
+import Image from "next/image";
+import { Search, ArrowRight, Filter } from "lucide-react";
 
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Badge } from "@/components/ui/badge"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { OfflineBanner } from "@/components/offline-banner"
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { OfflineBanner } from "@/components/offline-banner";
 
-export default function Home() {
+export default async function Home() {
+  const session = await auth();
+
   return (
     <main className="min-h-screen">
       <OfflineBanner />
+
+      {JSON.stringify(session, null, 2)}
 
       {/* Hero Section */}
       <section className="relative bg-slate-900 text-white">
@@ -32,7 +43,8 @@ export default function Home() {
               Stay Informed. Stay Prepared.
             </h1>
             <p className="mb-8 text-lg text-slate-200 md:text-xl">
-              Access critical information, resources, and support during times of crisis
+              Access critical information, resources, and support during times
+              of crisis
             </p>
             <div className="mx-auto mb-8 flex max-w-md flex-col gap-4 sm:flex-row">
               <div className="relative flex-1">
@@ -73,8 +85,12 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <div className="mb-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
-              <h2 className="text-3xl font-bold tracking-tight">Latest News & Updates</h2>
-              <p className="text-slate-600 mt-2">Stay informed with the most recent disaster events</p>
+              <h2 className="text-3xl font-bold tracking-tight">
+                Latest News & Updates
+              </h2>
+              <p className="text-slate-600 mt-2">
+                Stay informed with the most recent disaster events
+              </p>
             </div>
             <div className="flex items-center gap-2">
               <Button variant="outline" size="sm">
@@ -94,7 +110,12 @@ export default function Home() {
             {newsItems.map((item) => (
               <Card key={item.id} className="overflow-hidden">
                 <div className="aspect-video relative">
-                  <Image src={item.image || "/placeholder.svg"} alt={item.title} fill className="object-cover" />
+                  <Image
+                    src={item.image || "/placeholder.svg"}
+                    alt={item.title}
+                    fill
+                    className="object-cover"
+                  />
                 </div>
                 <CardHeader>
                   <div className="flex items-center justify-between">
@@ -107,7 +128,9 @@ export default function Home() {
                   <p className="text-slate-600">{item.excerpt}</p>
                 </CardContent>
                 <CardFooter className="flex justify-between">
-                  <span className="text-sm text-slate-500">Source: {item.source}</span>
+                  <span className="text-sm text-slate-500">
+                    Source: {item.source}
+                  </span>
                   <Button variant="ghost" size="sm">
                     Read More
                     <ArrowRight className="ml-2 h-4 w-4" />
@@ -123,9 +146,12 @@ export default function Home() {
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <div className="mb-10 text-center">
-            <h2 className="text-3xl font-bold tracking-tight">Disaster Preparedness</h2>
+            <h2 className="text-3xl font-bold tracking-tight">
+              Disaster Preparedness
+            </h2>
             <p className="text-slate-600 mt-2 max-w-2xl mx-auto">
-              Learn what to do before, during, and after different types of disasters
+              Learn what to do before, during, and after different types of
+              disasters
             </p>
           </div>
 
@@ -138,7 +164,11 @@ export default function Home() {
               <TabsTrigger value="tornado">Tornado</TabsTrigger>
             </TabsList>
             {disasterTypes.map((disaster) => (
-              <TabsContent key={disaster.type} value={disaster.type} className="mt-6">
+              <TabsContent
+                key={disaster.type}
+                value={disaster.type}
+                className="mt-6"
+              >
                 <Card>
                   <CardHeader>
                     <div className="flex items-center gap-4">
@@ -147,7 +177,9 @@ export default function Home() {
                       </div>
                       <div>
                         <CardTitle>{disaster.title}</CardTitle>
-                        <CardDescription>{disaster.description}</CardDescription>
+                        <CardDescription>
+                          {disaster.description}
+                        </CardDescription>
                       </div>
                     </div>
                   </CardHeader>
@@ -159,7 +191,10 @@ export default function Home() {
                           {disaster.before.map((item, i) => (
                             <li key={i} className="flex items-start gap-2">
                               <div className="rounded-full bg-green-100 p-1 mt-0.5">
-                                <svg className="h-2 w-2 fill-green-600" viewBox="0 0 6 6">
+                                <svg
+                                  className="h-2 w-2 fill-green-600"
+                                  viewBox="0 0 6 6"
+                                >
                                   <circle cx="3" cy="3" r="3" />
                                 </svg>
                               </div>
@@ -174,7 +209,10 @@ export default function Home() {
                           {disaster.during.map((item, i) => (
                             <li key={i} className="flex items-start gap-2">
                               <div className="rounded-full bg-amber-100 p-1 mt-0.5">
-                                <svg className="h-2 w-2 fill-amber-600" viewBox="0 0 6 6">
+                                <svg
+                                  className="h-2 w-2 fill-amber-600"
+                                  viewBox="0 0 6 6"
+                                >
                                   <circle cx="3" cy="3" r="3" />
                                 </svg>
                               </div>
@@ -189,7 +227,10 @@ export default function Home() {
                           {disaster.after.map((item, i) => (
                             <li key={i} className="flex items-start gap-2">
                               <div className="rounded-full bg-blue-100 p-1 mt-0.5">
-                                <svg className="h-2 w-2 fill-blue-600" viewBox="0 0 6 6">
+                                <svg
+                                  className="h-2 w-2 fill-blue-600"
+                                  viewBox="0 0 6 6"
+                                >
                                   <circle cx="3" cy="3" r="3" />
                                 </svg>
                               </div>
@@ -217,8 +258,12 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <div className="mb-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
-              <h2 className="text-3xl font-bold tracking-tight">Community Stories</h2>
-              <p className="text-slate-600 mt-2">Real experiences shared by survivors</p>
+              <h2 className="text-3xl font-bold tracking-tight">
+                Community Stories
+              </h2>
+              <p className="text-slate-600 mt-2">
+                Real experiences shared by survivors
+              </p>
             </div>
             <Button>Share Your Experience</Button>
           </div>
@@ -259,9 +304,12 @@ export default function Home() {
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <div className="mb-10 text-center">
-            <h2 className="text-3xl font-bold tracking-tight">Need Support? Connect with a Therapist</h2>
+            <h2 className="text-3xl font-bold tracking-tight">
+              Need Support? Connect with a Therapist
+            </h2>
             <p className="text-slate-600 mt-2 max-w-2xl mx-auto">
-              Professional help is available for those dealing with trauma and stress from disasters
+              Professional help is available for those dealing with trauma and
+              stress from disasters
             </p>
           </div>
 
@@ -282,7 +330,9 @@ export default function Home() {
                   <CardDescription>{therapist.specialty}</CardDescription>
                 </CardHeader>
                 <CardContent className="text-center">
-                  <p className="text-sm text-slate-600">{therapist.description}</p>
+                  <p className="text-sm text-slate-600">
+                    {therapist.description}
+                  </p>
                   <div className="mt-4 flex justify-center gap-2">
                     {therapist.tags.map((tag) => (
                       <Badge key={tag} variant="secondary">
@@ -309,7 +359,7 @@ export default function Home() {
         </div>
       </section>
     </main>
-  )
+  );
 }
 
 // Sample data
@@ -317,7 +367,8 @@ const newsItems = [
   {
     id: 1,
     title: "Magnitude 6.2 Earthquake Strikes Coastal Region",
-    excerpt: "A powerful earthquake has affected several coastal communities with reports of damage to infrastructure.",
+    excerpt:
+      "A powerful earthquake has affected several coastal communities with reports of damage to infrastructure.",
     image: "/placeholder.svg?height=300&width=600",
     date: "May 15, 2023",
     category: "Earthquake",
@@ -326,7 +377,8 @@ const newsItems = [
   {
     id: 2,
     title: "Flood Warning Issued for River Valley Communities",
-    excerpt: "Heavy rainfall has prompted authorities to issue evacuation orders for low-lying areas near the river.",
+    excerpt:
+      "Heavy rainfall has prompted authorities to issue evacuation orders for low-lying areas near the river.",
     image: "/placeholder.svg?height=300&width=600",
     date: "June 2, 2023",
     category: "Flood",
@@ -335,15 +387,17 @@ const newsItems = [
   {
     id: 3,
     title: "Wildfire Contained After Threatening Residential Areas",
-    excerpt: "Firefighters have successfully contained a wildfire that threatened several neighborhoods.",
+    excerpt:
+      "Firefighters have successfully contained a wildfire that threatened several neighborhoods.",
     image: "/placeholder.svg?height=300&width=600",
     date: "July 10, 2023",
     category: "Fire",
     source: "Fire Department",
   },
-]
+];
 
-import { Waves, Flame, Wind, CloudRain, Activity } from "lucide-react"
+import { Waves, Flame, Wind, CloudRain, Activity } from "lucide-react";
+import { auth } from "@/auth";
 
 const disasterTypes = [
   {
@@ -375,7 +429,12 @@ const disasterTypes = [
     title: "Flood",
     icon: Waves,
     description: "Overflow of water that submerges land that is usually dry",
-    before: ["Know your flood risk", "Prepare emergency kit", "Create evacuation plan", "Consider flood insurance"],
+    before: [
+      "Know your flood risk",
+      "Prepare emergency kit",
+      "Create evacuation plan",
+      "Consider flood insurance",
+    ],
     during: [
       "Move to higher ground",
       "Avoid walking through water",
@@ -418,7 +477,12 @@ const disasterTypes = [
     title: "Hurricane",
     icon: Wind,
     description: "Tropical cyclone with sustained winds of at least 74 mph",
-    before: ["Board up windows", "Secure outdoor objects", "Prepare emergency supplies", "Know evacuation routes"],
+    before: [
+      "Board up windows",
+      "Secure outdoor objects",
+      "Prepare emergency supplies",
+      "Know evacuation routes",
+    ],
     during: [
       "Stay indoors away from windows",
       "Monitor emergency broadcasts",
@@ -449,9 +513,14 @@ const disasterTypes = [
       "Cover head and neck",
       "If outside, lie in a low spot",
     ],
-    after: ["Watch for downed power lines", "Stay out of damaged buildings", "Help injured people", "Document damage"],
+    after: [
+      "Watch for downed power lines",
+      "Stay out of damaged buildings",
+      "Help injured people",
+      "Document damage",
+    ],
   },
-]
+];
 
 const communityStories = [
   {
@@ -481,7 +550,7 @@ const communityStories = [
     excerpt:
       "Living through Hurricane Maria taught me valuable lessons about preparation and resilience that I want to share with others...",
   },
-]
+];
 
 const therapists = [
   {
@@ -489,7 +558,8 @@ const therapists = [
     name: "Dr. Amanda Park",
     avatar: "/placeholder.svg?height=100&width=100",
     specialty: "Trauma Specialist",
-    description: "Specializing in disaster-related PTSD and anxiety disorders with 15 years of experience.",
+    description:
+      "Specializing in disaster-related PTSD and anxiety disorders with 15 years of experience.",
     tags: ["Trauma", "PTSD"],
   },
   {
@@ -497,7 +567,8 @@ const therapists = [
     name: "Dr. James Wilson",
     avatar: "/placeholder.svg?height=100&width=100",
     specialty: "Crisis Counselor",
-    description: "Helping individuals and families navigate the emotional aftermath of natural disasters.",
+    description:
+      "Helping individuals and families navigate the emotional aftermath of natural disasters.",
     tags: ["Crisis", "Family"],
   },
   {
@@ -505,7 +576,8 @@ const therapists = [
     name: "Dr. Maria Sanchez",
     avatar: "/placeholder.svg?height=100&width=100",
     specialty: "Child Psychologist",
-    description: "Supporting children and adolescents in processing traumatic events and building resilience.",
+    description:
+      "Supporting children and adolescents in processing traumatic events and building resilience.",
     tags: ["Children", "Anxiety"],
   },
   {
@@ -513,8 +585,8 @@ const therapists = [
     name: "Dr. Robert Lee",
     avatar: "/placeholder.svg?height=100&width=100",
     specialty: "Grief Counselor",
-    description: "Guiding individuals through the grief process after loss due to disasters.",
+    description:
+      "Guiding individuals through the grief process after loss due to disasters.",
     tags: ["Grief", "Loss"],
   },
-]
-
+];

@@ -1,6 +1,6 @@
 "use client";
 
-import { AlertTriangle, ArrowRight, LogIn, Menu } from "lucide-react";
+import { AlertTriangle, LogIn, Menu } from "lucide-react";
 import Link from "next/link";
 import { Button } from "../ui/button";
 import { usePathname } from "next/navigation";
@@ -51,7 +51,6 @@ export default function Header() {
                 Sign In <LogIn />
               </Link>
             </Button>
-            <Link href="/sign-up">Sign Up</Link>
             <Button variant="ghost" size="icon" className="md:hidden">
               <Menu className="h-5 w-5" />
               <span className="sr-only">Toggle menu</span>

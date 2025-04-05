@@ -8,3 +8,4 @@
 - [ ] Extract things into components
 - [ ] Somehow add offline support
 - [ ] Add admin dashboard for the management
+- [ ] Add localization
