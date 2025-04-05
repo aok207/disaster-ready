@@ -6,10 +6,13 @@ import { Button } from "../ui/button";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { items } from "@/constants/page-links";
+import { useSession } from "next-auth/react";
+import { ProfileDropdown } from "../profile-dropdown";
 
 export default function Header() {
   const pathname = usePathname();
   const isActive = (href: string) => pathname === href;
+  const { data: session, status } = useSession();
 
   return (
     <header className="border-b">
@@ -46,11 +49,25 @@ export default function Header() {
             >
               Emergency Contacts
             </Button>
-            <Button asChild size="sm" className="hidden md:inline-flex">
-              <Link href="/sign-in">
-                Sign In <LogIn />
-              </Link>
-            </Button>
+            {status !== "loading" && (
+              <>
+                {!session ? (
+                  <Button asChild size="sm" className="hidden md:inline-flex">
+                    <Link href="/sign-in">
+                      Sign In/Sign Up <LogIn />
+                    </Link>
+                  </Button>
+                ) : (
+                  <ProfileDropdown
+                    user={{
+                      name: session.user?.name ?? "",
+                      image: session.user?.image ?? "",
+                      email: session.user?.email ?? "",
+                    }}
+                  />
+                )}
+              </>
+            )}
             <Button variant="ghost" size="icon" className="md:hidden">
               <Menu className="h-5 w-5" />
               <span className="sr-only">Toggle menu</span>
