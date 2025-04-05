@@ -1,12 +1,11 @@
 "use client";
 
-import { AlertTriangle, ArrowRight, Menu } from "lucide-react";
+import { AlertTriangle, ArrowRight, LogIn, Menu } from "lucide-react";
 import Link from "next/link";
 import { Button } from "../ui/button";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { items } from "@/constants/page-links";
-import { UserButton, SignedIn, SignedOut } from "@clerk/nextjs";
 
 export default function Header() {
   const pathname = usePathname();
@@ -47,16 +46,12 @@ export default function Header() {
             >
               Emergency Contacts
             </Button>
-            <SignedIn>
-              <UserButton />
-            </SignedIn>
-            <SignedOut>
-              <Button asChild size="sm" className="hidden md:inline-flex">
-                <Link href="/sign-in">
-                  Sign In/Sign Up <ArrowRight />
-                </Link>
-              </Button>
-            </SignedOut>
+            <Button asChild size="sm" className="hidden md:inline-flex">
+              <Link href="/sign-in">
+                Sign In <LogIn />
+              </Link>
+            </Button>
+            <Link href="/sign-up">Sign Up</Link>
             <Button variant="ghost" size="icon" className="md:hidden">
               <Menu className="h-5 w-5" />
               <span className="sr-only">Toggle menu</span>
