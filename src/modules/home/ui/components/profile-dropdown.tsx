@@ -1,7 +1,7 @@
 "use client";
 import { BadgeCheck, ChevronsUpDown, LogOut } from "lucide-react";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,6 +13,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { signOut } from "next-auth/react";
+import Image from "next/image";
+import { checkIfUserIsAdmin } from "@/utils/admin";
+import Link from "next/link";
 
 export function ProfileDropdown({
   user,
@@ -23,7 +26,6 @@ export function ProfileDropdown({
     image: string;
   };
 }) {
-  console.log(user);
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -33,7 +35,7 @@ export function ProfileDropdown({
           className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
         >
           <Avatar className="h-8 w-8 rounded-lg">
-            <AvatarImage src={user.image} alt={user.name} />
+            <Image src={user.image} alt={user.name} width={32} height={32} />
             <AvatarFallback className="rounded-lg">
               {user.name[0]}
             </AvatarFallback>
@@ -53,7 +55,7 @@ export function ProfileDropdown({
         <DropdownMenuLabel className="p-0 font-normal">
           <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
             <Avatar className="h-8 w-8 rounded-lg">
-              <AvatarImage src={user.image} alt={user.name} />
+              <Image src={user.image} alt={user.name} width={32} height={32} />
               <AvatarFallback className="rounded-lg">
                 {user.name[0]}
               </AvatarFallback>
@@ -66,6 +68,9 @@ export function ProfileDropdown({
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
+          <DropdownMenuItem asChild>
+            <Link href="/admin">Admin Dashboard</Link>
+          </DropdownMenuItem>
           <DropdownMenuItem>
             <BadgeCheck />
             Account
