@@ -1,7 +1,7 @@
 "use client";
 import { ReactNode } from "react";
-import Header from "./header";
-import Footer from "./footer";
+import Header from "../components/header";
+import Footer from "../components/footer";
 import { ProgressProvider } from "@bprogress/next/app";
 
 export default function PageLayout({ children }: { children: ReactNode }) {

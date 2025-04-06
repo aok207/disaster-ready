@@ -2,12 +2,12 @@
 
 import { AlertTriangle, LogIn, Menu } from "lucide-react";
 import Link from "next/link";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { items } from "@/constants/page-links";
 import { useSession } from "next-auth/react";
-import { ProfileDropdown } from "../profile-dropdown";
+import { ProfileDropdown } from "./profile-dropdown";
 
 export default function Header() {
   const pathname = usePathname();
@@ -33,7 +33,7 @@ export default function Header() {
                   key={item.href}
                   className={cn(
                     "text-sm font-medium hover:text-red-600 transition-colors",
-                    isActive(item.href) && "text-red-600",
+                    isActive(item.href) && "text-red-600"
                   )}
                 >
                   {item.title}

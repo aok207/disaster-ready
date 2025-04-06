@@ -3,7 +3,7 @@ import { items } from "@/constants/page-links";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 
 export default function Footer() {
   const pathname = usePathname();
@@ -30,7 +30,7 @@ export default function Footer() {
                     href={item.href}
                     className={cn(
                       "text-slate-400 hover:text-white transition-colors",
-                      isActive(item.href) && "text-white",
+                      isActive(item.href) && "text-white"
                     )}
                   >
                     {item.title}
