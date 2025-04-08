@@ -2,7 +2,6 @@
 import {
   SidebarGroup,
   SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
@@ -66,7 +65,6 @@ const MainSection = () => {
 
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>Apps</SidebarGroupLabel>
       <SidebarGroupContent>
         <SidebarMenu>
           {items.map((item) => {

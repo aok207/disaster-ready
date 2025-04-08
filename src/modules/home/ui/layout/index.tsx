@@ -1,17 +1,19 @@
-"use client";
 import { ReactNode } from "react";
 import Header from "../components/header";
 import Footer from "../components/footer";
-import { ProgressProvider } from "@bprogress/next/app";
+import { checkIfUserIsAdmin } from "@/utils/admin";
 
-export default function PageLayout({ children }: { children: ReactNode }) {
+export default async function PageLayout({
+  children,
+}: {
+  children: ReactNode;
+}) {
+  const isAdmin = await checkIfUserIsAdmin();
   return (
-    <ProgressProvider color="#ff0000" options={{ showSpinner: true }}>
-      <div className="min-h-svh flex flex-col">
-        <Header />
-        {children}
-        <Footer />
-      </div>
-    </ProgressProvider>
+    <div className="min-h-svh flex flex-col">
+      <Header isAdmin={isAdmin} />
+      {children}
+      <Footer />
+    </div>
   );
 }

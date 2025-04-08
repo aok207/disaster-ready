@@ -1,5 +1,11 @@
 "use client";
-import { BadgeCheck, ChevronsUpDown, LogOut } from "lucide-react";
+import {
+  ArrowLeft,
+  BadgeCheck,
+  ChevronsUpDown,
+  LayoutDashboard,
+  LogOut,
+} from "lucide-react";
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
@@ -14,18 +20,22 @@ import {
 import { Button } from "@/components/ui/button";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
-import { checkIfUserIsAdmin } from "@/utils/admin";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export function ProfileDropdown({
   user,
+  isAdmin,
 }: {
   user: {
     name: string;
     email: string;
     image: string;
   };
+  isAdmin: boolean;
 }) {
+  const pathname = usePathname();
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -68,9 +78,25 @@ export function ProfileDropdown({
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem asChild>
-            <Link href="/admin">Admin Dashboard</Link>
-          </DropdownMenuItem>
+          {isAdmin && (
+            <>
+              {pathname.includes("admin") ? (
+                <DropdownMenuItem asChild>
+                  <Link href="/">
+                    <ArrowLeft />
+                    Leave Dashboard
+                  </Link>
+                </DropdownMenuItem>
+              ) : (
+                <DropdownMenuItem asChild>
+                  <Link href="/admin">
+                    <LayoutDashboard />
+                    Go To Admin Dashboard
+                  </Link>
+                </DropdownMenuItem>
+              )}
+            </>
+          )}
           <DropdownMenuItem>
             <BadgeCheck />
             Account

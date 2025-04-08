@@ -9,7 +9,7 @@ import { items } from "@/constants/page-links";
 import { useSession } from "next-auth/react";
 import { ProfileDropdown } from "./profile-dropdown";
 
-export default function Header() {
+export default function Header({ isAdmin }: { isAdmin: boolean }) {
   const pathname = usePathname();
   const isActive = (href: string) => pathname === href;
   const { data: session, status } = useSession();
@@ -33,7 +33,7 @@ export default function Header() {
                   key={item.href}
                   className={cn(
                     "text-sm font-medium hover:text-red-600 transition-colors",
-                    isActive(item.href) && "text-red-600"
+                    isActive(item.href) && "text-red-600",
                   )}
                 >
                   {item.title}
@@ -64,6 +64,7 @@ export default function Header() {
                       image: session.user?.image ?? "",
                       email: session.user?.email ?? "",
                     }}
+                    isAdmin={isAdmin}
                   />
                 )}
               </>

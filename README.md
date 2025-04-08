@@ -5,7 +5,8 @@
 - [X] Database Setup
 - [X] Design Database schemas
 - [X] Auth 
-- [ ] Extract things into components
+- [X] Extract things into components
 - [ ] Somehow add offline support
 - [ ] Add admin dashboard for the management
 - [ ] Add localization
+- [ ] Disasters admin dashboard

@@ -13,7 +13,7 @@ const DashboardLayout = async ({ children }: { children: ReactNode }) => {
 
   return (
     <SidebarProvider>
-      <DashboardSidebar />
+      <DashboardSidebar isAdmin={isAdmin} />
       <SidebarInset className="h-[calc(100svh-16px)] overflow-hidden">
         <main className="z-10 h-full w-full overflow-auto px-4 pt-6 pb-4">
           {children}
